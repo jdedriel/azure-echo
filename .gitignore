@@ -1,0 +1,9 @@
+# .NET build output
+server/bin/
+server/obj/
+# saved scores on your computer
+server/scores.json
+# OS / editor junk
+.DS_Store
+Thumbs.db
+.vercel/

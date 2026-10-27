@@ -1,0 +1,195 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <meta name="theme-color" content="#061826" />
+  <title>Azure Echo — answer the ocean's call</title>
+  <meta name="description" content="Answer the deep-ocean signal as Echo travels through four luminous underwater worlds. Watch, listen, and repeat the real lights." />
+  <meta property="og:title" content="Azure Echo — answer the ocean's call" />
+  <meta property="og:description" content="Watch the light. Listen to the deep. Guide Echo home." />
+  <meta property="og:image" content="assets/azure-echo-cover.jpg" />
+  <link rel="icon" type="image/png" href="assets/azure-echo-icon-192.png" />
+  <link rel="apple-touch-icon" href="assets/azure-echo-icon-192.png" />
+  <link rel="manifest" href="manifest.webmanifest" />
+  <meta name="mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-title" content="Azure Echo" />
+  <link rel="stylesheet" href="css/styles.css" />
+</head>
+<body>
+  <div id="bg" aria-hidden="true"></div>
+
+  <header class="site-header">
+    <a class="brand" href="#home" aria-label="Azure Echo home">
+      <span class="brand-mark" aria-hidden="true"><i></i><i></i></span>
+      <span><strong>AZURE ECHO</strong><small>MEMORY ARCADE</small></span>
+    </a>
+    <nav aria-label="Main">
+      <a href="#home" data-nav="home">Home</a>
+      <a href="#zones" data-nav="zones">Zones</a>
+      <a href="#story" data-nav="story">Story</a>
+      <a href="#leaderboard" data-nav="leaderboard">Top 10</a>
+      <button id="sound-btn" type="button" aria-pressed="true">Sound on</button>
+      <button id="install-btn" class="install-trigger" type="button" hidden>Install app</button>
+      <button id="account-btn" type="button">Sign in</button>
+    </nav>
+  </header>
+
+  <main>
+    <!-- HOME -->
+    <section id="home" class="view">
+      <div class="hero">
+        <div class="hero-copy">
+          <p class="eyebrow">A MEMORY ARCADE · AGES 8+</p>
+          <h1>Azure<br /><em>Echo</em></h1>
+          <p class="lede">A pulse is calling from the deep. Watch the light, listen to the ocean, and guide Echo home, one pattern at a time.</p>
+          <div class="actions">
+            <a class="btn primary" href="#zones" id="begin-btn">Begin the descent →</a>
+            <a class="btn" href="#story">Meet Echo</a>
+            <button class="btn install-trigger" type="button" hidden>⬇ Get the app</button>
+          </div>
+        </div>
+        <div class="hero-art">
+          <img class="hero-lumen" src="assets/lumen.webp" alt="Lumen, an ancient anglerfish guide" />
+          <img class="hero-echo" src="assets/echo.webp" alt="Echo, a small glowing sea creature" />
+        </div>
+      </div>
+      <div class="steps">
+        <div><b>01</b><h2>Watch</h2><p>Light travels through the ring.</p></div>
+        <div><b>02</b><h2>Listen</h2><p>The deep can go dark.</p></div>
+        <div><b>03</b><h2>Repeat</h2><p>Answer the ocean's call.</p></div>
+      </div>
+    </section>
+
+    <!-- ZONES -->
+    <section id="zones" class="view">
+      <p class="eyebrow">A SIGNAL DESCENDS</p>
+      <h1>Choose your <em>depth</em></h1>
+      <p class="lede">Each zone opens when you clear the one above it. Once a zone is open it stays open, and if you slip you restart that same zone.</p>
+      <div id="zone-grid" class="zone-grid"></div>
+      <div id="endless-box" class="endless" hidden>
+        <div><h2>Endless Current</h2><p>Every twist returns. Stay with the pattern as long as you can.</p></div>
+        <button class="btn primary" type="button" id="endless-btn">Enter Endless Mode ∞</button>
+      </div>
+    </section>
+
+    <!-- PLAY -->
+    <section id="play" class="view">
+      <!-- 1. intro -->
+      <div id="play-intro" class="panel">
+        <div class="panel-copy">
+          <p class="eyebrow" id="intro-depth"></p>
+          <h1 id="intro-title"></h1>
+          <p class="lede" id="intro-text"></p>
+          <p class="twist" id="intro-twist"></p>
+          <div class="actions">
+            <button class="btn primary" type="button" id="start-btn">Begin the signal →</button>
+            <a class="btn" href="#zones">Choose another zone</a>
+          </div>
+        </div>
+        <div class="panel-art"><img src="assets/lumen.webp" alt="Lumen, the guide" /></div>
+      </div>
+
+      <!-- 2. the game board -->
+      <div id="play-board" class="board" hidden>
+        <div class="hud">
+          <div><small>ZONE</small><b id="hud-zone"></b></div>
+          <div><small>ROUND</small><b id="hud-round"></b></div>
+          <div><small>SCORE</small><b id="hud-score"></b></div>
+        </div>
+        <div class="timer" id="timer" hidden><span id="timer-fill"></span></div>
+
+        <div class="ring" id="ring">
+          <div class="ring-line" aria-hidden="true"></div>
+          <button class="pad" data-pad="0" type="button" aria-label="Light 1" disabled></button>
+          <button class="pad" data-pad="1" type="button" aria-label="Light 2" disabled></button>
+          <button class="pad" data-pad="2" type="button" aria-label="Light 3" disabled></button>
+          <button class="pad" data-pad="3" type="button" aria-label="Light 4" disabled></button>
+          <button class="pad" data-pad="4" type="button" aria-label="Light 5" disabled></button>
+          <button class="pad" data-pad="5" type="button" aria-label="Light 6" disabled></button>
+          <div class="center">
+            <img src="assets/echo.webp" alt="Echo" />
+          </div>
+        </div>
+
+        <div class="status" role="status" aria-live="polite">
+          <b id="phase-title"></b>
+          <span id="phase-text"></span>
+          <small id="input-count"></small>
+        </div>
+
+        <div class="board-actions">
+          <button class="btn" type="button" id="replay-btn">↻ Ask Lumen <i id="replay-left"></i></button>
+          <button class="btn" type="button" id="skip-btn">⇢ Skip <i id="skip-left"></i></button>
+          <button class="btn quiet" type="button" id="leave-btn">Leave</button>
+        </div>
+        <p class="hint">Tap a light, or press <kbd>1</kbd>–<kbd>6</kbd>.</p>
+      </div>
+
+      <!-- 3. result -->
+      <div id="play-result" class="panel" hidden>
+        <div class="panel-copy">
+          <p class="eyebrow" id="result-eyebrow"></p>
+          <h1 id="result-title"></h1>
+          <p class="lede" id="result-text"></p>
+          <p class="score-line">SCORE <b id="result-score">0</b></p>
+          <div class="actions" id="result-actions"></div>
+        </div>
+        <div class="panel-art"><img src="assets/echo.webp" alt="Echo" /></div>
+      </div>
+    </section>
+
+    <!-- STORY -->
+    <section id="story" class="view">
+      <p class="eyebrow">THE STORY, TOLD BY THE WATER</p>
+      <h1>One signal, <em>four depths</em></h1>
+      <p class="lede">There is no dialogue. The story is told by the water getting darker, the sound thinning out, and the lights growing more deceptive.</p>
+      <div class="cards">
+        <article class="card"><img src="assets/echo.webp" alt="" /><h2>Echo</h2><small>THE PLAYER</small><p>A small, gentle, glowing sea creature from the surface reef. Echo cannot fight; it can only watch, listen and answer with light.</p></article>
+        <article class="card"><img src="assets/lumen.webp" alt="" /><h2>Lumen</h2><small>THE GUIDE</small><p>An ancient anglerfish who flickers a short hint at the start of each zone. Once a pattern begins, Echo is on its own.</p></article>
+        <article class="card"><img src="assets/glint_eel.webp" alt="" /><h2>The Glint Eels</h2><small>THE TRICKSTERS</small><p>Bioluminescent eels that copy real lights. Their false light <em>stutters</em>. Learn to let it pass.</p></article>
+      </div>
+      <h2 class="sub">What changes as you descend</h2>
+      <ol id="twist-list" class="twists"></ol>
+    </section>
+
+    <!-- LEADERBOARD -->
+    <section id="leaderboard" class="view">
+      <p class="eyebrow">THE DEEPEST DIVERS</p>
+      <h1>Top <em>10</em></h1>
+      <p class="lede" id="board-source">Scores on this device.</p>
+      <label class="name-field" id="name-field">Your diver name
+        <input id="name-input" maxlength="20" placeholder="Guest diver" autocomplete="nickname" />
+      </label>
+      <ol id="score-list" class="scores"></ol>
+    </section>
+  </main>
+
+  <footer class="site-footer">AZURE ECHO · WATCH THE LIGHT · LISTEN TO THE DEEP · GUIDE ECHO HOME</footer>
+  <dialog id="auth-dialog" aria-labelledby="auth-title">
+    <form id="auth-form" novalidate>
+      <h2 id="auth-title">Sign in</h2>
+      <p class="lede small">Save your progress to your account and join the global Top 10.</p>
+      <label>Diver name
+        <input id="auth-user" autocomplete="username" maxlength="20" required />
+      </label>
+      <label>Password
+        <input id="auth-pass" type="password" autocomplete="current-password" maxlength="100" required />
+      </label>
+      <p id="auth-error" class="form-error" role="alert"></p>
+      <div class="actions">
+        <button class="btn primary" id="auth-submit" type="submit">Sign in</button>
+        <button class="btn quiet" id="auth-cancel" type="button">Cancel</button>
+      </div>
+      <button class="link" id="auth-switch" type="button">New here? Create an account</button>
+    </form>
+  </dialog>
+  <div id="toast" class="toast" role="status" aria-live="polite"></div>
+  <noscript><p class="noscript">Azure Echo needs JavaScript to play.</p></noscript>
+
+  <script src="js/config.js"></script>
+  <script src="js/game.js"></script>
+  <script src="js/app.js"></script>
+</body>
+</html>
