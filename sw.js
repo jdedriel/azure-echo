@@ -1,6 +1,6 @@
 /* Azure Echo service worker: lets the game open offline and be installed as an app.
    When you change files and redeploy, bump the number in CACHE so players get the new version. */
-const CACHE = "azure-echo-v1";
+const CACHE = "azure-echo-v2";
 const FILES = [
   "./", "index.html", "manifest.webmanifest",
   "css/styles.css", "js/config.js", "js/game.js", "js/app.js",

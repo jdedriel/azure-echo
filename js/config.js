@@ -6,4 +6,4 @@
         const API_URL = "https://azure-echo-api.onrender.com";
   - Leave it empty and the game still works: scores are saved in the player's browser.
 */
-const API_URL = "";
+const API_URL = "https://azure-echo.onrender.com";
